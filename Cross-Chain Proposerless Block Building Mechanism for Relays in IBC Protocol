@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{Cross-Chain Proposerless Block Building Mechanism for Relays in IBC Protocol}
+\author{by: Eren Tokmak - Kutlay Başar Aklan}
+\date{}
+
+\maketitle
+
+\section*{Problem Definition}
+
+In the current IBC ecosystem, relayers process cross-chain transactions by relaying IBC packets between source and destination chains. These relayers are vital to IBC’s functioning but are constrained by centralized, packet-by-packet relaying that introduces inefficiencies, scalability issues, and security vulnerabilities—particularly when Miner Extractable Value (MEV) extraction comes into play. We propose a paradigm shift that transforms the relay architecture from its current state to an innovative, proposerless block-building system that introduces decentralization, packet bundling, and game-theoretic security into the IBC relay layer.
+
+\section*{Overview of The Proposerless Block Construction}
+
+Our system introduces a novel, generalized approach to cross-chain block building within the IBC ecosystem, creating an adaptable, efficient, and compatible system that can be seamlessly adopted by any relayer across diverse blockchain architectures. This model moves beyond the limitations of traditional Proposer-Builder Separation (PBS) systems by implementing an algorithmic, value-based block selection process. Rather than relying on manual proposals or intermediary decision-making, this approach automatically selects the highest-value block at the end of each epoch, optimizing for economic value and fairness.
+
+\subsection*{Direct Use of High-Value Blocks by Destination Validators}
+
+One of the key innovations in this system is the ability of destination chain validators to directly integrate the pre-selected, highest-value block. Rather than attending any block building auctions, the destination validator validates and appends the optimized block, which has already been selected based on economic value and cross-chain efficiency metrics.
+
+\subsection*{Highest-Value Block Selection Mechanism}
+
+In our model, the block with the highest cumulative value wins at the end of each epoch. The block value is calculated based on several economic factors:
+
+\begin{itemize}
+    \item \textbf{Transaction Fees:} Higher transaction fees contribute significantly to the block’s total value.
+    \item \textbf{MEV Extraction:} The system identifies and prioritizes MEV extraction opportunities to maximize block profitability.
+    \item \textbf{User Incentives:} Additional fees for prioritized inclusion increase the block’s cumulative value.
+\end{itemize}
+
+This value-driven selection ensures that only the most economically valuable block is selected for validation, removing the need for subjective validator decisions and aligning incentives across chains.
+
+\subsection*{Why Proposerless?}
+
+The Proposerless system introduces a universally compatible cross-chain block construction method that seamlessly integrates with various chain architectures and validation systems, from Proposer-Builder models to validator-driven structures. By relying on universal economic metrics—shotgun incentives—it creates a boundless compatibility layer that enables efficient, fair cross-chain interactions while preserving decentralized control and economic efficiency.
+
+This system also overcomes key flaws of traditional PBS, addressing block subsidization bias and builder-validator integration bias. In PBS, wealthier builders can distort competition by inflating block value with personal subsidies to secure validator selection. Our model eliminates this by selecting blocks based solely on intrinsic economic factors, ensuring fair competition based on true value.
+
+Our model addresses builder-validator integration bias, where builder-validators may prioritize their own blocks, reducing network diversity and centralizing control. By automating block selection, the Proposerless system enables destination validators to directly adopt the highest-value block, preventing self-prioritization and promoting transparency across the network.
+
+\subsection*{Block Merging Mechanism}
+
+One challenge in a proposerless system is ensuring that validators can still process their own mempool transactions, which might otherwise be excluded if they only integrate the pre-selected proposerless block. To address this, the Proposerless Cross-Chain Block Building Mechanism employs a \textbf{Block Merging Mechanism} that utilizes invisible boundaries—natural, internal divisions within blocks driven by behavioral prioritization methodologies found in every chain. These boundaries, which segment blocks into prioritized parts such as Top-of-Block (ToB), Body-of-Block (BoB), and End-of-Block (EoB), create an adaptable structure that exists across all blockchains, whether Proposer-Builder Separation (PBS) or validator-driven models.
+
+These intrinsic segments can be tactically leveraged to integrate the proposerless mini-block seamlessly into the broader block structure of the destination chain. This invisible sorting hierarchy allows validators to merge the proposerless mini-block within these divisions, positioning it effectively based on its value without disrupting the natural flow of local transactions. By embedding the proposerless block within this behaviorally optimized sorting structure, validators can preserve both the cross-chain block’s optimized economic impact and the transaction flow required for efficient chain operations, achieving smooth, integrated cross-chain functionality.
+
+\subsection*{Builder Incentives and Profit Sharing}
+
+\textbf{Incentives:} To foster active participation, the Proposerless Cross-Chain Block Building Mechanism structures incentives to encourage builders to create high-value blocks optimized for economic returns. Builders are rewarded for strategically prioritizing high-fee transactions, maximizing MEV extraction, and integrating user-defined incentives, promoting a competitive environment driven by innovation and precision. This structure motivates builders to compete on economic efficiency rather than volume alone, enriching the ecosystem with dynamic, strategic block selection and refined value creation.
+
+\textbf{Profit Sharing:} Profit sharing within the mechanism ensures a balanced reward distribution between builders and validators, aligning incentives across participants. Profits generated from transaction fees, MEV rewards, and user incentives are divided to reflect each party’s contribution. The builder’s portion is calculated based on the economic value added through curated transaction selection, while the validator’s portion compensates their essential role in finalizing and securing the block within the chain. This collaborative profit-sharing model forms a positive feedback loop, where builders continuously enhance block value and validators are motivated to validate these high-impact blocks. Together, this creates a sustainable, efficient, and transparent cross-chain economy, harmonizing efforts for maximum ecosystem-wide profitability.
+
+This economic structure forms a positive feedback loop: builders are incentivized to create high-value blocks, while validators are motivated to validate and integrate these blocks. Through this collaborative framework, our Proposerless Cross-Chain Block Building Mechanism ensures maximum efficiency, transparency, and profitability across the cross-chain ecosystem, creating a sustainable and balanced approach to multichain transactions.
+
+\section*{Technical Aspects of The Construction Model}
+
+The Proposerless Block Construction model fundamentally reconfigures the mechanics of cross-chain block relaying by discarding traditional, centralized validation in favor of a decentralized consensus layer intricately woven into the IBC protocol. This architecture enables high-integrity block selection and validation, balancing security with economic efficiency. The model inherits foundational Distributed Ledger Technology (DLT) methodologies such as Byzantine Fault Tolerance (BFT), peer-to-peer consensus, and data immutability. These principles reinforce data security, ensuring that cross-chain transactions are validated with transparency and resistance to tampering. By leveraging BFT-inspired structures, the system establishes a robust sub-consensus layer that allows independent relayers and builders to verify each other’s work, promoting collective accountability and reducing vulnerabilities to network manipulation.
+
+\subsection*{Decentralized Validation and Sub-Consensus Mechanism}
+
+Once a block achieves pre-selection status, a decentralized validation process is triggered, engaging the remaining relayers—identified as $n-1$ participants—in a structured sub-consensus protocol. In this decentralized configuration, no single relay entity is granted disproportionate influence, ensuring that power distribution remains balanced and resistant to collusion. This group of validators jointly undertakes the responsibility of verifying the selected block’s integrity in a multilayered attestation process, transforming them into decentralized guardians of consensus.
+
+\textbf{Block Validation Process:} The verification process involves a series of compliance checks aligned with protocol requirements, including packet ordering integrity, transaction validity, and adherence to consensus-driven parameters. Validators operate within a Byzantine Fault Tolerant (BFT)-like consensus framework, wherein a minimum $\frac{2}{3}$ majority is required to confirm the block’s authenticity and allow its progression through the network. This BFT alignment ensures resilience against dishonest or compromised validators, supporting high fault tolerance and the integrity of each transaction packet. The framework promotes deterministic validation across the network, creating a unified standard of correctness that validates all blocks before they reach destination chains.
+
+\textbf{Handling Dishonest Builders and Slashing Protocols:} To align validator behavior with network integrity, a slashing mechanism is embedded into the Proposerless model. This mechanism targets dishonest activities such as the insertion of invalid packets or opportunistic reordering that disrupts transaction chronology. Validators or builders detected engaging in these actions face predefined penalties, either through economic loss or temporary exclusion (referred to as “jailing”) from further block-building or validation cycles. Unlike traditional staking models, which require upfront capital, the Proposerless model enforces a profit-based penalty system that leverages potential gains as collateral, thereby encouraging compliance. By implementing financial disincentives, this slashing mechanism realigns economic motivations with protocol rules, creating a self-regulating framework that minimizes disruptive behavior.
+
+\subsection*{Integration with Existing IBC Modules}
+
+A distinctive feature of the Proposerless Block Construction model is its seamless interoperability with existing IBC modules, such as Interchain Accounts and Cross-Chain Queries. Unlike conventional relaying systems, which operate in isolation, this model unifies relayers into a cohesive relay network, capable of collaboratively building blocks with high economic utility rather than merely forwarding discrete packets.
+
+\textbf{Cross-Chain Message Passing Optimization:} The Proposerless model elevates the IBC protocol’s message-passing capabilities by aggregating IBC packets into singular, high-value blocks. This bundling consolidates cross-chain messages, token transfers, and interchain data into a compact, efficiently validated structure. Such bulk processing not only optimizes throughput by reducing packet-level overhead but also aligns with the validation rules of destination chains, ensuring protocol adherence. This bulk data transmission capability enhances the network’s capacity, enabling it to handle substantial transaction loads without disrupting chain-specific rules or sacrificing compliance.
+
+\textbf{Toward Cross-Chain Atomicity:} Cross-chain atomicity, an essential yet challenging goal for complex multichain transactions, is difficult to consistently achieve within traditional relay models, often resulting in partial or fragmented cross-chain executions. The Proposerless Block Construction model introduces a more synchronized execution path by coordinating bundled data and validation processes, which may serve as a solid step toward achieving reliable atomicity across chains. By synchronizing data bundles with decentralized validation, the system minimizes the risk of incomplete cross-chain actions. While not a complete solution, this alignment fosters a high degree of operational consistency, potentially enabling cross-chain transactions to execute more fully and accurately across destination chains.
+
+Through these technical advancements, the Proposerless Block Construction model positions itself as a sophisticated, resilient framework for future-ready cross-chain operability. This approach unites the principles of DLT with cutting-edge cross-chain infrastructure, fostering a robust ecosystem that is secure, efficient, and scalable across the multichain blockchain landscape.
+
+\section*{Metrics}
+
+\subsection*{Security}
+
+By designing a competitive block-building system, we transfer the responsibility for ensuring honest behavior from centralized relayers to decentralized builders and validators. This creates a game-theoretic security model where builders validate each other’s actions. The threat of slashing ensures compliance, while validators dynamically attest to the block's validity, further securing cross-chain packet transmission from dishonest actors. This mechanism addresses the vulnerabilities of current relay designs, where centralization can expose the system to MEV exploitation and malicious manipulation.
+
+\subsection*{Scalability / Delay}
+
+The current IBC relay system achieves impressive throughput by leveraging TCP/IP protocols for off-chain communication, enabling relayers to efficiently transmit packets between chains at the networking level. This existing architecture allows for rapid packet delivery, thanks to the reliability and performance inherent in TCP/IP’s established transport mechanisms. However, while this system already benefits from high throughput due to its networking foundation, we propose an evolution that introduces a hyper-competitive environment. In this environment, specialized, performance-focused entities—each optimizing their infrastructure for speed and efficiency—engage in an ongoing race to outcompete one another. This constant competition forces relayers to push the boundaries of latency and performance, driving innovations that further optimize cross-chain communication.
+
+By cultivating this performance-centric ecosystem, our system retains the high-frequency nature of IBC’s current TCP/IP-based packet transmission, yet elevates it to a new level. Specialized relayers, motivated by competitive incentives, will fine-tune their systems to achieve even faster, lower-latency relay performance. In doing so, we ensure that cross-chain interactions remain not only fast but faster, despite the added complexity of block bundling and validation. This leads to a more robust and scalable cross-chain infrastructure that improves on an already high-performance relay model.
+
+\subsection*{Decentralization}
+
+Our mechanism fosters a decentralized ecosystem by encouraging participation from various independent entities, each competing for the most valuable packet bundles. This system discourages centralization by distributing power and incentives across a diverse set of block builders and validators. Unlike traditional centralized relayers, our method inherently reduces the risk of single-point failures by introducing decentralized consensus among independent relayers, ensuring the system’s resilience.
+
+\subsection*{Cost}
+
+The Proposerless Block Building Mechanism revolutionizes MEV extraction, turning what is often a chaotic, fee-driving process into a streamlined, cost-efficient system. By integrating MEV extraction directly into the block-building process, relayers can capture value across multiple transactions simultaneously, rather than competing on a transaction-by-transaction basis. This leads to a more predictable and efficient method of capturing MEV without the gas wars and bidding frenzies that typically drive transaction fees through the roof.
+
+\subsection*{Goodput}
+
+Our system drives significant gains in goodput by ensuring that bundled IBC packets are processed in a more optimized, streamlined manner. By aggregating transactions into blocks, the system increases the volume of useful, high-value data delivered in each relay cycle, minimizing wasted resources and maximizing throughput.
+
+\subsection*{Jostling}
+
+We minimize jostling by reducing transaction conflicts and congestion. Instead of individual transactions competing for priority, relayers bundle IBC packets into optimized blocks, focusing on block-level value rather than chaotic, last-minute reordering. This approach ensures smooth, conflict-free cross-chain interactions, preventing bottlenecks and reducing delays. With less jostling, the system operates more efficiently, delivering faster and more predictable results without unnecessary transaction competition.
+
+\subsection*{MEV Handling and Optimization}
+
+Unlike conventional MEV solutions that focus on transaction sequencing within a single chain, our mechanism allows relayers to extract MEV through block bundling of IBC packets. By embedding MEV directly into the packet-bundling process, relayers can optimize for MEV opportunities across multiple chains in one block. This integrated approach avoids the chaotic “first-mover” advantage seen in single-chain MEV strategies, creating a more balanced, distributed mechanism for MEV extraction while reducing gas costs and bottlenecks.
+
+\subsection*{Edge Case Scenarios}
+
+\textbf{I. The Missing Block Builder}
+
+If Bob, the builder of the most valuable block, fails to present it, the system doesn’t stall. It seamlessly moves to Alice’s block, the second most valuable, and presents it to validators. Bob is automatically penalized, typically through slashing, to deter future misbehavior. The system continues smoothly without disruption, ensuring that block relay and validation processes remain efficient and secure.
+
+\textbf{II. Failure to Reach $\frac{2}{3}$ Consensus}
+
+Now, let’s explore what happens if validators fail to reach the required $\frac{2}{3}$ consensus on Alice’s block. The system initiates a fallback process to guarantee progress:
+
+\begin{enumerate}
+    \item \textbf{Next Block in Line:} If Alice’s block doesn’t pass, the system moves to the next most valuable block—let's say, Charlie’s block. Validators then attempt to validate Charlie's block using the same consensus rules. This ensures that the system can still continue even when the top choice fails.
+    \item \textbf{Re-evaluation Cycle:} If Charlie’s block also fails to reach consensus, the system triggers a re-evaluation cycle. Validators are required to revisit previous blocks (like Alice’s) after a short timeout, forcing a revalidation attempt. This step encourages validators to reconsider their stances without stalling the entire process.
+    \item \textbf{Epoch Restart:} If the consensus still isn’t achieved after the re-evaluation, the system moves to an epoch restart. This means a new round of block proposals is initiated, and all block builders submit fresh blocks for validation. This ensures that no deadlock occurs and the system always moves forward, even in complex failure scenarios.
+\end{enumerate}
+
+\section*{Conclusion}
+
+The Proposerless Block Building Mechanism represents a leap forward in how IBC relayers operate. By allowing relayers to bundle packets into blocks and integrating decentralized, proposerless block selection, we address the centralization, security, and scalability improvements applicable in the current IBC relay system. This mechanism not only optimizes cross-chain communication but also lays the groundwork for achieving atomic cross-chain transactions and optimum cross-chain MEV. Through the use of decentralized validation and competitive block building, we bring a transformative upgrade to the IBC protocol, ushering in the next era of high-performance, secure, and decentralized cross-chain interaction.
+
+\end{document}
